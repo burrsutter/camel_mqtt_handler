@@ -20,7 +20,7 @@
     <route id="temperatureRoute">
       <from uri="mqtt://consumer?host=tcp://localhost:1883&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=temp_ti_cc2650" />
       <log message="${body}"/>
-      <marshal ref="myJson"/>
+      <unmarshal ref="myJson"/>
       <to uri="bean:myHandler"/>
     </route>
   </camelContext>
