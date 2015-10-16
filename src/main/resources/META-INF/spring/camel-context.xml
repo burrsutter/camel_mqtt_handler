@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+                           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+   <!-- body of message from sensor {"sensorid":"ti_cc2650", "temp":17.1, "time":1445023872175} -->
+
+  <bean id="myHandler" class="com.redhat.summit.TempHandler"></bean> 
+  <!--
+  <bean id="gson" class="org.apache.camel.component.gson.GsonDataFormat">
+    <property name="unmarshalType" value="com.redhat.summit.TempPojo"/>
+  </bean>
+  -->
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+	<dataFormats>
+       <json id="myJson" library="Jackson" unmarshalTypeName="com.redhat.summit.TempPojo"/>
+	</dataFormats>
+    <route id="temperatureRoute">
+      <from uri="mqtt://consumer?host=tcp://localhost:1883&amp;userName=admin&amp;password=admin&amp;subscribeTopicName=temp_ti_cc2650" />
+      <log message="${body}"/>
+      <marshal ref="myJson"/>
+      <to uri="bean:myHandler"/>
+    </route>
+  </camelContext>
+
+</beans>
