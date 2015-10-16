@@ -23,6 +23,7 @@
       <unmarshal ref="myJson"/>
       <to uri="bean:myHandler"/>
       <log message="${body}" />
+      <to uri="mqtt://sender?host=tcp://localhost:1883&amp;userName=admin&amp;password=admin&amp;publishTopicName=temperature_status"/>
     </route>
   </camelContext>
 
