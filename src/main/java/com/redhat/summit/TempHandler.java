@@ -17,10 +17,10 @@ public class TempHandler {
 			System.out.println("TEMP: " + sensorReading.getTemp());
 			if (sensorReading.getTemp() > 22.0) {
 				// System.out.println("\nHOT\n");
-				exchange.getOut().setBody("HOT");
+				exchange.getIn().setBody("HOT");
 			} else {
 				// System.out.println("\nNormal\n");				
-				exchange.getOut().setBody("NORMAL");
+				exchange.getIn().setBody("NORMAL");
 			}
 		} else {
 			System.out.println("temp is null");
